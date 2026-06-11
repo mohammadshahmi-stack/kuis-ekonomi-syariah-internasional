@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuis Ekonomi Syariah Internasional</title>
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --card: #fffaf2;
+      --ink: #17202a;
+      --muted: #5f6c7b;
+      --primary: #153b3f;
+      --primary-2: #0d2d30;
+      --accent: #b88746;
+      --danger: #9b2c2c;
+      --ok: #246b45;
+      --line: rgba(23, 32, 42, 0.12);
+      --shadow: 0 18px 50px rgba(22, 29, 37, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Cambria, Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(184, 135, 70, 0.22), transparent 34%),
+        linear-gradient(135deg, #f7f0e6 0%, #efe2cf 100%);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1100px, 94vw);
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), #1f5558);
+      color: white;
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -80px;
+      top: -100px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 0.98;
+      letter-spacing: -1.3px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 17px;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .meta-item strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .meta-item span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 22px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 250, 242, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .identity {
+      padding: 22px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .identity h2, .quiz h2, .result h2 {
+      margin: 0 0 14px;
+      color: var(--primary);
+      font-size: 25px;
+      letter-spacing: -0.3px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 7px;
+      color: #25313c;
+    }
+
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: rgba(184, 135, 70, 0.85);
+      box-shadow: 0 0 0 4px rgba(184, 135, 70, 0.12);
+    }
+
+    .notice {
+      margin-top: 14px;
+      padding: 14px;
+      background: rgba(184, 135, 70, 0.12);
+      border: 1px solid rgba(184, 135, 70, 0.22);
+      border-radius: 16px;
+      color: #4a3723;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .quiz {
+      padding: 24px;
+    }
+
+    .progress-wrap {
+      margin: 8px 0 20px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 9px;
+    }
+
+    .bar {
+      height: 11px;
+      border-radius: 999px;
+      background: rgba(21, 59, 63, 0.12);
+      overflow: hidden;
+    }
+
+    .bar > div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      border-radius: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .question {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fffdf8;
+      margin-bottom: 16px;
+    }
+
+    .question-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .number {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+    }
+
+    .qtext {
+      font-weight: 800;
+      line-height: 1.45;
+      font-size: 17px;
+      padding-top: 5px;
+    }
+
+    .option {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid rgba(23, 32, 42, 0.1);
+      padding: 12px;
+      border-radius: 16px;
+      margin: 8px 0;
+      cursor: pointer;
+      background: #fffaf2;
+      transition: 0.18s ease;
+    }
+
+    .option:hover {
+      border-color: rgba(184, 135, 70, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .option input {
+      width: auto;
+      margin: 4px 0 0;
+      accent-color: var(--primary);
+    }
+
+    .letter {
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 24px rgba(21, 59, 63, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-2);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(21, 59, 63, 0.08);
+      color: var(--primary);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(21, 59, 63, 0.12);
+    }
+
+    .btn-danger {
+      background: rgba(155, 44, 44, 0.09);
+      color: var(--danger);
+    }
+
+    .status {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.45;
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .result {
+      display: none;
+      margin-top: 22px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fffdf8;
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .score-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 999px;
+      background: conic-gradient(var(--accent) 0deg, var(--accent) var(--scoreDeg), rgba(21, 59, 63, 0.12) var(--scoreDeg), rgba(21, 59, 63, 0.12) 360deg);
+      display: grid;
+      place-items: center;
+      margin: auto;
+      position: relative;
+    }
+
+    .score-circle::after {
+      content: "";
+      width: 118px;
+      height: 118px;
+      background: #fffdf8;
+      border-radius: inherit;
+      position: absolute;
+    }
+
+    .score-value {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .score-value strong {
+      display: block;
+      font-size: 40px;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .score-value span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .result-item {
+      background: rgba(21, 59, 63, 0.06);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .result-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .result-item strong {
+      color: var(--primary);
+      font-size: 18px;
+    }
+
+    .review {
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .review details {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      background: #fffaf2;
+    }
+
+    .review summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .correct {
+      color: var(--ok);
+      font-weight: 900;
+    }
+
+    .wrong {
+      color: var(--danger);
+      font-weight: 900;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .identity {
+        position: static;
+      }
+
+      .meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .score-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(96vw, 520px);
+        padding-top: 14px;
+      }
+
+      .hero {
+        padding: 24px;
+        border-radius: 22px;
+      }
+
+      .meta {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz, .identity, .result {
+        padding: 18px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Widget Kuis Online • Ekonomi Syariah Internasional</div>
+      <h1>Kuis Ekonomi Syariah Internasional</h1>
+      <p>
+        Kuis ini menguji pemahaman mahasiswa tentang prinsip ekonomi syariah dalam perdagangan internasional,
+        keuangan global, halal value chain, maqashid syariah, sukuk, valuta asing, dan tata kelola ekonomi lintas negara.
+      </p>
+      <div class="meta">
+        <div class="meta-item"><strong>20</strong><span>Soal pilihan ganda</span></div>
+        <div class="meta-item"><strong>100</strong><span>Skor maksimal</span></div>
+        <div class="meta-item"><strong>5</strong><span>Poin per jawaban benar</span></div>
+        <div class="meta-item"><strong>Auto</strong><span>Skor masuk Google Sheets</span></div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel identity">
+        <h2>Identitas Mahasiswa</h2>
+        <form id="quizForm">
+          <div class="field">
+            <label for="nama">Nama Lengkap</label>
+            <input id="nama" name="nama" type="text" placeholder="Masukkan nama lengkap" required />
+          </div>
+          <div class="field">
+            <label for="nim">NIM</label>
+            <input id="nim" name="nim" type="text" placeholder="Masukkan NIM" required />
+          </div>
+          <div class="field">
+            <label for="kelas">Kelas</label>
+            <input id="kelas" name="kelas" type="text" placeholder="Contoh: ES 5A" required />
+          </div>
+
+          <div class="notice">
+            Pastikan identitas sudah benar. Setelah dikirim, skor dan detail jawaban akan disimpan ke Google Sheets.
+          </div>
+        </form>
+      </aside>
+
+      <section class="panel quiz">
+        <h2>Daftar Soal</h2>
+        <div class="progress-wrap">
+          <div class="progress-top">
+            <span id="answeredText">Terjawab 0 dari 20 soal</span>
+            <span id="timerText">Durasi: 00:00</span>
+          </div>
+          <div class="bar"><div id="progressBar"></div></div>
+        </div>
+
+        <form id="questionsForm">
+          <div id="questions"></div>
+
+          <div class="actions">
+            <button class="btn-secondary" type="button" id="checkBtn">Cek Skor Sementara</button>
+            <button class="btn-primary" type="submit" id="submitBtn">Kirim Jawaban</button>
+            <button class="btn-danger" type="button" id="resetBtn">Reset</button>
+            <div class="status" id="status">Status: siap digunakan.</div>
+          </div>
+        </form>
+
+        <section class="result" id="resultBox">
+          <h2>Hasil Kuis</h2>
+          <div class="score-card">
+            <div class="score-circle" id="scoreCircle" style="--scoreDeg: 0deg;">
+              <div class="score-value">
+                <strong id="scoreValue">0</strong>
+                <span>dari 100</span>
+              </div>
+            </div>
+            <div class="result-grid">
+              <div class="result-item"><span>Nama</span><strong id="rNama">-</strong></div>
+              <div class="result-item"><span>NIM</span><strong id="rNim">-</strong></div>
+              <div class="result-item"><span>Kelas</span><strong id="rKelas">-</strong></div>
+              <div class="result-item"><span>Kategori</span><strong id="rKategori">-</strong></div>
+              <div class="result-item"><span>Jawaban benar</span><strong id="rBenar">-</strong></div>
+              <div class="result-item"><span>Durasi</span><strong id="rDurasi">-</strong></div>
+            </div>
+          </div>
+
+          <div class="review">
+            <h2>Review Jawaban</h2>
+            <div id="reviewList"></div>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <footer>
+      Disusun untuk Mata Kuliah Ekonomi Syariah Internasional.<br />
+      Oleh: Mohammad Aliman Shahmi, M.E., CIPM
+    </footer>
+  </main>
+
+  <script>
+    /*
+      PENTING:
+      1. Deploy Google Apps Script sebagai Web App.
+      2. Salin URL Web App ke variabel SCRIPT_URL di bawah.
+      3. Jika belum diganti, kuis tetap bisa menghitung skor, tetapi tidak mengirim ke Google Sheets.
+    */
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLO7dZPCpoACuqyXVX3zfVIKvVHurEWhVyAU3jsfHZk1MZJuDqjFyrIBb9OaiaiOj7Sg/exec";
+
+    const questions = [
+      {
+            "q": "Ekonomi Syariah Internasional pada dasarnya membahas hubungan ekonomi antarnegara dengan menekankan pada prinsip:",
+            "options": [
+                  "Efisiensi pasar semata",
+                  "Kebebasan modal tanpa batas",
+                  "Keadilan, kemaslahatan, dan kepatuhan syariah",
+                  "Dominasi negara kuat dalam perdagangan global"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Prinsip utama yang membedakan transaksi ekonomi internasional syariah dari transaksi konvensional adalah larangan terhadap:",
+            "options": [
+                  "Perdagangan lintas negara",
+                  "Keuntungan usaha",
+                  "Riba, gharar, dan maysir",
+                  "Kerja sama bilateral"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Dalam perspektif Islam, perdagangan internasional diperbolehkan selama:",
+            "options": [
+                  "Menguntungkan negara eksportir saja",
+                  "Tidak melibatkan mata uang asing",
+                  "Tidak bertentangan dengan prinsip syariah dan membawa maslahat",
+                  "Dilakukan hanya antarnegara Muslim"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Konsep maslahah dalam ekonomi syariah internasional berarti bahwa aktivitas ekonomi global harus:",
+            "options": [
+                  "Mengutamakan pertumbuhan tanpa memperhatikan distribusi",
+                  "Memberi manfaat luas dan mencegah kerusakan",
+                  "Menekan biaya produksi serendah mungkin",
+                  "Menghapus seluruh mekanisme pasar"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Dalam perdagangan internasional, larangan gharar terutama berkaitan dengan:",
+            "options": [
+                  "Ketidakjelasan objek, harga, atau ketentuan transaksi",
+                  "Besarnya keuntungan eksportir",
+                  "Perbedaan nilai tukar antarnegara",
+                  "Pembayaran menggunakan mata uang asing"
+            ],
+            "answer": "A"
+      },
+      {
+            "q": "Salah satu contoh praktik yang berpotensi mengandung maysir dalam ekonomi internasional adalah:",
+            "options": [
+                  "Ekspor produk halal",
+                  "Pembiayaan perdagangan berbasis akad murabahah",
+                  "Spekulasi ekstrem atas nilai tukar tanpa underlying transaction",
+                  "Investasi pada industri makanan halal"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Dalam sistem keuangan syariah internasional, transaksi valuta asing diperbolehkan apabila:",
+            "options": [
+                  "Dilakukan untuk spekulasi keuntungan jangka pendek",
+                  "Dilakukan secara tunai atau memenuhi prinsip sharf",
+                  "Tidak memiliki kebutuhan ekonomi riil",
+                  "Selalu menggunakan mata uang negara Muslim"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Akad yang paling sering digunakan dalam pembiayaan perdagangan internasional syariah untuk pembelian barang dengan margin keuntungan yang disepakati adalah:",
+            "options": [
+                  "Murabahah",
+                  "Qardh",
+                  "Hibah",
+                  "Wakaf"
+            ],
+            "answer": "A"
+      },
+      {
+            "q": "Dalam konteks ekspor-impor, Letter of Credit Syariah bertujuan untuk:",
+            "options": [
+                  "Menghilangkan seluruh risiko perdagangan",
+                  "Menjamin pembayaran dengan tetap memperhatikan prinsip syariah",
+                  "Menggantikan seluruh peran bank sentral",
+                  "Menghindari kewajiban dokumen ekspor"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Salah satu tantangan utama dalam pengembangan ekonomi syariah internasional adalah:",
+            "options": [
+                  "Tidak adanya kebutuhan terhadap produk halal",
+                  "Kecilnya populasi Muslim dunia",
+                  "Perbedaan standar halal dan regulasi antarnegara",
+                  "Larangan Islam terhadap perdagangan luar negeri"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Konsep halal value chain dalam perdagangan internasional menekankan pentingnya:",
+            "options": [
+                  "Produk halal hanya pada tahap akhir konsumsi",
+                  "Kehalalan dari bahan baku, produksi, distribusi, hingga konsumsi",
+                  "Penghapusan seluruh sertifikasi produk",
+                  "Pembatasan perdagangan hanya di pasar domestik"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Dalam maqashid syariah, aktivitas ekonomi internasional idealnya mendukung perlindungan terhadap:",
+            "options": [
+                  "Harta, jiwa, agama, akal, dan keturunan",
+                  "Modal, pasar, harga, dan ekspor",
+                  "Konsumsi, investasi, impor, dan utang",
+                  "Produksi, distribusi, promosi, dan laba"
+            ],
+            "answer": "A"
+      },
+      {
+            "q": "Larangan riba dalam pembiayaan internasional bertujuan untuk:",
+            "options": [
+                  "Menghapus seluruh bentuk pembiayaan",
+                  "Mencegah eksploitasi dan ketidakadilan dalam transaksi keuangan",
+                  "Melarang kerja sama antarnegara",
+                  "Menghambat investasi asing"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Sukuk internasional berbeda dari obligasi konvensional karena sukuk:",
+            "options": [
+                  "Tidak boleh diperdagangkan sama sekali",
+                  "Selalu bebas risiko",
+                  "Berbasis kepemilikan atau manfaat atas aset tertentu",
+                  "Hanya diterbitkan oleh negara Muslim"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Dalam ekonomi syariah internasional, investasi asing dinilai baik apabila:",
+            "options": [
+                  "Masuk ke sektor produktif, halal, dan memberi manfaat sosial-ekonomi",
+                  "Hanya mengejar keuntungan investor asing",
+                  "Masuk ke sektor apa pun tanpa pertimbangan etika",
+                  "Mengabaikan dampak lingkungan dan tenaga kerja"
+            ],
+            "answer": "A"
+      },
+      {
+            "q": "Prinsip adl dalam hubungan ekonomi internasional berarti:",
+            "options": [
+                  "Negara kuat boleh menentukan aturan secara sepihak",
+                  "Hubungan ekonomi harus dibangun atas keadilan dan keseimbangan",
+                  "Negara berkembang harus selalu menjadi pasar impor",
+                  "Semua negara wajib memiliki mata uang yang sama"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Salah satu peran Organisasi Kerja Sama Islam atau OIC dalam ekonomi syariah internasional adalah:",
+            "options": [
+                  "Menghapus seluruh perdagangan dengan negara non-Muslim",
+                  "Mendorong kerja sama ekonomi, perdagangan, dan pembangunan antarnegara anggota",
+                  "Menggantikan fungsi seluruh bank sentral negara anggota",
+                  "Menetapkan satu mata uang wajib bagi semua negara"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Dalam perspektif Islam, globalisasi ekonomi perlu dikritisi ketika:",
+            "options": [
+                  "Mendorong pertukaran barang dan jasa",
+                  "Memperluas akses pasar produk halal",
+                  "Menimbulkan ketimpangan, eksploitasi, dan dominasi ekonomi",
+                  "Membuka peluang kerja sama antarnegara"
+            ],
+            "answer": "C"
+      },
+      {
+            "q": "Instrumen zakat, infak, sedekah, dan wakaf dalam konteks internasional dapat berperan untuk:",
+            "options": [
+                  "Menggantikan seluruh mekanisme perdagangan dunia",
+                  "Memperkuat solidaritas, redistribusi, dan pembiayaan sosial lintas negara",
+                  "Menghapus kebutuhan investasi produktif",
+                  "Membatasi pertumbuhan ekonomi negara Muslim"
+            ],
+            "answer": "B"
+      },
+      {
+            "q": "Tujuan akhir ekonomi syariah internasional bukan hanya pertumbuhan ekonomi, tetapi juga:",
+            "options": [
+                  "Dominasi perdagangan negara Muslim",
+                  "Akumulasi devisa tanpa batas",
+                  "Falah, keadilan global, dan kemaslahatan umat manusia",
+                  "Kompetisi bebas tanpa aturan moral"
+            ],
+            "answer": "C"
+      }
+];
+
+    const letters = ["A", "B", "C", "D"];
+    const questionsContainer = document.getElementById("questions");
+    const questionsForm = document.getElementById("questionsForm");
+    const quizForm = document.getElementById("quizForm");
+    const progressBar = document.getElementById("progressBar");
+    const answeredText = document.getElementById("answeredText");
+    const timerText = document.getElementById("timerText");
+    const statusEl = document.getElementById("status");
+    const resultBox = document.getElementById("resultBox");
+    const submitBtn = document.getElementById("submitBtn");
+
+    let startTime = Date.now();
+    let lastResultPayload = null;
+
+    function renderQuestions() {
+      questionsContainer.innerHTML = questions.map((item, index) => {
+        const options = item.options.map((option, optIndex) => {
+          const letter = letters[optIndex];
+          return `
+            <label class="option">
+              <input type="radio" name="q${index + 1}" value="${letter}" required />
+              <div><span class="letter">${letter}.</span> ${escapeHtml(option)}</div>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <article class="question">
+            <div class="question-head">
+              <div class="number">${index + 1}</div>
+              <div class="qtext">${escapeHtml(item.q)}</div>
+            </div>
+            <div class="options">${options}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getIdentity() {
+      return {
+        nama: document.getElementById("nama").value.trim(),
+        nim: document.getElementById("nim").value.trim(),
+        kelas: document.getElementById("kelas").value.trim()
+      };
+    }
+
+    function getAnswers() {
+      return questions.map((_, index) => {
+        const selected = document.querySelector(`input[name="q${index + 1}"]:checked`);
+        return selected ? selected.value : "";
+      });
+    }
+
+    function calculateScore() {
+      const answers = getAnswers();
+      let correct = 0;
+      const detail = questions.map((item, index) => {
+        const studentAnswer = answers[index];
+        const isCorrect = studentAnswer === item.answer;
+        if (isCorrect) correct++;
+        return {
+          nomor: index + 1,
+          soal: item.q,
+          jawabanMahasiswa: studentAnswer || "-",
+          kunciJawaban: item.answer,
+          benar: isCorrect
+        };
+      });
+
+      const score = correct * 5;
+      const category = getCategory(score);
+
+      return {
+        totalSoal: questions.length,
+        benar: correct,
+        salah: questions.length - correct,
+        skor: score,
+        kategori: category,
+        detail
+      };
+    }
+
+    function getCategory(score) {
+      if (score >= 85) return "Sangat Baik";
+      if (score >= 70) return "Baik";
+      if (score >= 55) return "Cukup";
+      return "Perlu Penguatan";
+    }
+
+    function getDurationSeconds() {
+      return Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+    }
+
+    function formatDuration(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    function updateTimer() {
+      timerText.textContent = `Durasi: ${formatDuration(getDurationSeconds())}`;
+    }
+
+    function updateProgress() {
+      const answered = getAnswers().filter(Boolean).length;
+      answeredText.textContent = `Terjawab ${answered} dari ${questions.length} soal`;
+      progressBar.style.width = `${(answered / questions.length) * 100}%`;
+    }
+
+    function validateIdentity() {
+      const identity = getIdentity();
+      if (!identity.nama || !identity.nim || !identity.kelas) {
+        statusEl.textContent = "Status: lengkapi nama, NIM, dan kelas terlebih dahulu.";
+        statusEl.style.color = "var(--danger)";
+        return false;
+      }
+      return true;
+    }
+
+    function validateAllAnswered() {
+      const answered = getAnswers().filter(Boolean).length;
+      if (answered !== questions.length) {
+        statusEl.textContent = `Status: masih ada ${questions.length - answered} soal yang belum dijawab.`;
+        statusEl.style.color = "var(--danger)";
+        return false;
+      }
+      return true;
+    }
+
+    function showResult(payload) {
+      document.getElementById("rNama").textContent = payload.nama;
+      document.getElementById("rNim").textContent = payload.nim;
+      document.getElementById("rKelas").textContent = payload.kelas;
+      document.getElementById("rKategori").textContent = payload.kategori;
+      document.getElementById("rBenar").textContent = `${payload.benar} dari ${payload.totalSoal}`;
+      document.getElementById("rDurasi").textContent = formatDuration(payload.durasiDetik);
+      document.getElementById("scoreValue").textContent = payload.skor;
+      document.getElementById("scoreCircle").style.setProperty("--scoreDeg", `${payload.skor * 3.6}deg`);
+
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = payload.detail.map(item => {
+        const label = item.benar
+          ? `<span class="correct">Benar</span>`
+          : `<span class="wrong">Salah</span>`;
+
+        return `
+          <details>
+            <summary>Soal ${item.nomor} — ${label}</summary>
+            <p><strong>Soal:</strong> ${escapeHtml(item.soal)}</p>
+            <p><strong>Jawaban mahasiswa:</strong> ${escapeHtml(item.jawabanMahasiswa)}</p>
+            <p><strong>Kunci jawaban:</strong> ${escapeHtml(item.kunciJawaban)}</p>
+          </details>
+        `;
+      }).join("");
+
+      resultBox.style.display = "block";
+      resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    async function sendToGoogleSheets(payload) {
+      if (!SCRIPT_URL || SCRIPT_URL.includes("PASTE_URL")) {
+        statusEl.textContent = "Status: skor dihitung, tetapi belum dikirim karena URL Apps Script belum dipasang.";
+        statusEl.style.color = "var(--danger)";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("payload", JSON.stringify(payload));
+
+      /*
+        no-cors dipakai agar request dari GitHub Pages/Google Sites ke Apps Script tetap sederhana.
+        Browser tidak bisa membaca balasan server dalam mode ini, tetapi data tetap terkirim.
+      */
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      });
+
+      statusEl.textContent = "Status: jawaban dikirim. Silakan cek Google Sheets.";
+      statusEl.style.color = "var(--ok)";
+    }
+
+    document.addEventListener("change", updateProgress);
+    setInterval(updateTimer, 1000);
+
+    document.getElementById("checkBtn").addEventListener("click", () => {
+      if (!validateIdentity()) return;
+      const result = calculateScore();
+      const identity = getIdentity();
+      const payload = {
+        ...identity,
+        ...result,
+        durasiDetik: getDurationSeconds(),
+        timestampClient: new Date().toISOString(),
+        sumber: location.href
+      };
+      showResult(payload);
+      statusEl.textContent = "Status: skor sementara berhasil dihitung. Untuk menyimpan, klik Kirim Jawaban.";
+      statusEl.style.color = "var(--muted)";
+    });
+
+    questionsForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!validateIdentity()) return;
+      if (!validateAllAnswered()) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Mengirim...";
+
+      const result = calculateScore();
+      const identity = getIdentity();
+      const payload = {
+        ...identity,
+        ...result,
+        durasiDetik: getDurationSeconds(),
+        timestampClient: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        sumber: location.href
+      };
+
+      lastResultPayload = payload;
+      showResult(payload);
+
+      try {
+        await sendToGoogleSheets(payload);
+      } catch (error) {
+        statusEl.textContent = "Status: gagal mengirim ke Google Sheets. Periksa URL Apps Script dan izin deploy.";
+        statusEl.style.color = "var(--danger)";
+        console.error(error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Kirim Jawaban";
+      }
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      const confirmed = confirm("Reset seluruh identitas dan jawaban?");
+      if (!confirmed) return;
+      quizForm.reset();
+      questionsForm.reset();
+      resultBox.style.display = "none";
+      statusEl.textContent = "Status: siap digunakan.";
+      statusEl.style.color = "var(--muted)";
+      startTime = Date.now();
+      updateProgress();
+      updateTimer();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    renderQuestions();
+    updateProgress();
+    updateTimer();
+  </script>
+</body>
+</html>
